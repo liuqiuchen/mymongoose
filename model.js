@@ -17,7 +17,7 @@ let userSchema = new Schema({
 
 // 在Schema里添加自定义方法
 userSchema.methods.capitalizeName = () => {
-    this.name = this.name.toUpperCase();
+    //this.name = this.name.toUpperCase();
     return this.name;
 };
 

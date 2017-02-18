@@ -8,10 +8,10 @@ const bodyParser = require('body-parser');
 let app = express();
 let port = process.env.PORT || 3000;
 
+// 解析json【这个要放在前面，不然执行顺序会混乱】
+app.use(bodyParser.json());
 // 解析表单数据，可以用req.body访问数据
 app.use(bodyParser.urlencoded({extended: true}));
-// 解析json
-app.use(bodyParser.json());
 
 // 设置html模板
 app.engine('.html', ejs.__express);
@@ -28,7 +28,12 @@ app.get('/', (req, res) => {
     res.render('index', {title: 'home'});
 });
 
-app.post('/new', (req, res) => {
+app.get('/form', (req, res) => {
+    res.render('form', {title: '表单'});
+});
+
+app.post('/form/new', (req, res) => {
+    console.log(req.body);
     let newGuy = new User({
         name: req.body.name,
         username: req.body.username,
@@ -41,4 +46,5 @@ app.post('/new', (req, res) => {
         }
         console.log(`name is ${name}`);
     });
+    res.redirect('/');
 });
